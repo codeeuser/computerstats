@@ -403,6 +403,7 @@ public class WelcomeController {
         oshi.put("Open File Descriptors", fileSystem.getOpenFileDescriptors());
         oshi.put("Max File Descriptors", fileSystem.getMaxFileDescriptors());
 
+        List<Map<String, Object>> list = new LinkedList<>();
         for (OSFileStore fs : fileSystem.getFileStores()) {
             Map<String, Object> map = new LinkedHashMap<>();
             map.put("Usable Space", fs.getUsableSpace());
@@ -415,7 +416,9 @@ public class WelcomeController {
             map.put("Volume", fs.getVolume());
             map.put("Logical Volume", fs.getLogicalVolume());
             map.put("Mount", fs.getMount());
+            list.add(map);
         }
+        oshi.put("File Store List", list);
         return oshi;
     }
 
