@@ -1,5 +1,6 @@
 package com.wheref.computerstats.controller;
 
+import java.text.DecimalFormat;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -63,6 +64,8 @@ public class WelcomeController {
         NETWORK,
         PROCESSLIST
     }
+
+    static DecimalFormat decfor = new DecimalFormat("0.00"); 
     
     @GetMapping("/computer")
 	public Map<String, Object> computer() {
@@ -271,7 +274,7 @@ public class WelcomeController {
         oshi.put("cpucore", load.length);
         int count = 1;
         for (double avg : load) {
-            oshi.put("CPU "+ (count++) +" load per processor", avg * 100);
+            oshi.put("CPU "+ (count++) +" load per processor",  decfor.format(avg * 100));
         }
         
         long freq = processor.getProcessorIdentifier().getVendorFreq();
@@ -312,8 +315,8 @@ public class WelcomeController {
             OSProcess p = procs.get(i);
             Map<String, Object> map = new LinkedHashMap<>();
             map.put("PID", p.getProcessID());
-            map.put("%CPU", 100d * (p.getKernelTime() + p.getUserTime()) / p.getUpTime());
-            map.put("%MEM", 100d * p.getResidentSetSize() / memory.getTotal());
+            map.put("%CPU", decfor.format(100d * (p.getKernelTime() + p.getUserTime()) / p.getUpTime()));
+            map.put("%MEM", decfor.format(100d * p.getResidentSetSize() / memory.getTotal()));
             map.put("VSZ", FormatUtil.formatBytes(p.getVirtualSize()));
             map.put("RSS", FormatUtil.formatBytes(p.getResidentSetSize()));
             map.put("Name", p.getName());
