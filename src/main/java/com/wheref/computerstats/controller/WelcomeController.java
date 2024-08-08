@@ -267,7 +267,7 @@ public class WelcomeController {
                 "User: %.1f%% Nice: %.1f%% System: %.1f%% Idle: %.1f%% IOwait: %.1f%% IRQ: %.1f%% SoftIRQ: %.1f%% Steal: %.1f%%",
                 100d * user / totalCpu, 100d * nice / totalCpu, 100d * sys / totalCpu, 100d * idle / totalCpu,
                 100d * iowait / totalCpu, 100d * irq / totalCpu, 100d * softirq / totalCpu, 100d * steal / totalCpu));
-        oshi.put("System Cpu Load Between Ticks", processor.getSystemCpuLoadBetweenTicks(prevTicks) * 100);
+        oshi.put("System Cpu Load Between Ticks", decfor.format(processor.getSystemCpuLoadBetweenTicks(prevTicks) * 100));
         double[] loadAverage = processor.getSystemLoadAverage(3);
         oshi.put("CPU load averages", loadAverage);
         double[] load = processor.getProcessorCpuLoadBetweenTicks(prevProcTicks);
